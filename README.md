@@ -25,11 +25,11 @@ Eu criei esta extensao para estudar como noticias falsas se espalham e como pequ
 ## Etica e responsabilidade
 Eu nao coleto dados pessoais, nao rastreio usuarios e nao censuro conteudo. Eu deixei o sistema transparente de proposito para que o usuario entenda o motivo do resultado e tome sua propria decisao.
 
-## Instalacao completa (extensao + servidor)
-### Passo 1: baixar o codigo
+## Tutorial completo (extensao + servidor)
+### 1) Baixar o codigo
 - Eu baixo o ZIP do projeto ou clono o repositorio.
 
-### Passo 2: instalar o servidor local (opcional, mas recomendado)
+### 2) Preparar o servidor local (opcional, mas recomendado)
 - Eu instalo o Node.js 18+.
 - Eu entro na pasta `server`.
 - Eu copio `server/.env.example` para `server/.env`.
@@ -43,17 +43,22 @@ npm run dev
 ```
 - Eu testo `http://localhost:8787/health` e espero `{ "ok": true }`.
 
-### Passo 3: instalar a extensao
+### 3) Instalar a extensao no Chrome
 - Eu abro `chrome://extensions`.
 - Eu ativo o **Modo do desenvolvedor**.
 - Eu clico em **Carregar sem compactacao**.
 - Eu seleciono a pasta deste projeto.
 
-### Passo 4: conectar a extensao ao servidor
+### 4) Conectar a extensao ao servidor
 - Eu abro as **Opcoes** da extensao.
 - Eu ativo **Usar verificacao com fontes (Serper/RSS)**.
 - Eu preencho a URL `http://localhost:8787/api/analisar`.
 - Eu salvo as configuracoes.
+
+### 5) Testar tudo
+- Eu abro uma noticia em um site comum.
+- Eu clico no icone da extensao.
+- Eu uso **Analisar** e verifico o veredito, o motivo e as fontes.
 
 ## Como eu testo
 1. Eu abro uma noticia em um site comum.
