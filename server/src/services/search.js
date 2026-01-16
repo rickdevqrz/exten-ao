@@ -5,14 +5,20 @@ function buildQuery(claim) {
   return `${claim} (${domains.join(" OR ")})`;
 }
 
+export function hasSerperKey() {
+  return Boolean(process.env.SERPER_API_KEY);
+}
+
 export async function searchEvidence(claims) {
-  if (!config.serperApiKey) {
+  // Aqui eu leio a chave da Serper apenas quando a busca e chamada.
+  const apiKey = String(process.env.SERPER_API_KEY || "").trim();
+  if (!apiKey) {
     return { ok: false, error: "SERPER_KEY_MISSING", results: [] };
   }
 
   const headers = {
     "Content-Type": "application/json",
-    "X-API-KEY": config.serperApiKey
+    "X-API-KEY": apiKey
   };
 
   const allResults = [];

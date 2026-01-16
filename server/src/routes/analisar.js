@@ -1,6 +1,7 @@
 ﻿import express from "express";
 import { verifyContent, verifyQuery } from "../services/verify.js";
 import { fetchArticle } from "../services/article.js";
+import { hasSerperKey } from "../services/search.js";
 import { config } from "../config.js";
 
 const router = express.Router();
@@ -16,7 +17,8 @@ function mapVerdict(verdict) {
 }
 
 function buildDebug(overrides = {}) {
-  const searchEnabled = Boolean(config.searchEnabled && config.serperApiKey);
+  // Aqui eu marco a Serper como disponivel apenas quando a chave existe.
+  const searchEnabled = Boolean(config.searchEnabled && hasSerperKey());
   const rssEnabled = true;
   return {
     search_used: false,

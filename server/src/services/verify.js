@@ -1,5 +1,5 @@
 ﻿import { config } from "../config.js";
-import { searchEvidence } from "./search.js";
+import { searchEvidence, hasSerperKey } from "./search.js";
 import { fetchEvidencePages } from "./fetch.js";
 import { searchNewsRss } from "./rss.js";
 
@@ -347,7 +347,8 @@ function buildSearchSeeds({ title, text, url }) {
 
 async function collectEvidence(seeds, preferSerper = true, options = {}) {
   const { fetchPages = true } = options;
-  const searchEnabled = Boolean(config.searchEnabled && config.serperApiKey);
+  // Aqui eu ativo a Serper somente quando a chave existe e a busca esta habilitada.
+  const searchEnabled = Boolean(config.searchEnabled && hasSerperKey());
   const rssEnabled = true;
   let searchUsed = false;
   let searchOk = null;

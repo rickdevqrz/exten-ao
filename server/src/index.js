@@ -48,6 +48,11 @@ app.use((req, res, next) => {
 
 app.use("/api", analisarRoute);
 
+// Aqui eu deixo um endpoint simples para testar se a API esta no ar.
+app.get("/", (req, res) => {
+  res.send("API online");
+});
+
 app.get("/health", (req, res) => {
   res.json({ ok: true });
 });

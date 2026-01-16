@@ -22,8 +22,7 @@ export const config = {
   ollamaModel: process.env.OLLAMA_MODEL || "llama3.1:8b",
   searchEnabled: process.env.SEARCH_ENABLED
     ? process.env.SEARCH_ENABLED === "true"
-    : Boolean(process.env.SERPER_API_KEY),
-  serperApiKey: process.env.SERPER_API_KEY || "",
+    : true,
   allowlist: [
     "agenciabrasil.ebc.com.br",
     "apublica.org",
