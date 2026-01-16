@@ -128,7 +128,7 @@ Variaveis extras (opcionais):
 - Mantenha `.env` e `node_modules` no `.gitignore`.
 
 ## Nota do autor
-Tive ajuda de IA como assistente em partes do desenvolvimento, mas a parte mais dificil foi feita por mim: definir criterios, ajustar a logica, validar resultados e refinar a experiencia.
+Tive ajuda de IA como assistente em partes do desenvolvimento. Ainda assim, eu conduzi as decisoes principais: definir criterios, ajustar a logica, validar resultados e refinar a experiencia.
 
 ## Publicar no GitHub (opcional)
 ```bash
