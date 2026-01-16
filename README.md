@@ -43,7 +43,8 @@ Este e um projeto pessoal e educacional. A ideia e estudar desinformacao e enten
 3) (Opcional) Ativar verificacao com fontes  
 - Abra **Opcoes** da extensao.  
 - Ative **Verificacao com fontes (Serper/RSS)**.  
-- Use a URL padrao ou informe seu servidor.
+- A release ja vem configurada com:  
+  `https://veredicto.up.railway.app/api/analisar`
 
 ### Opcao B: clonar o repositorio (para servidor local e ajustes)
 1) Clonar o projeto:

@@ -60,7 +60,7 @@ const SETTINGS_DEFAULTS = {
   autoRefreshEnabled: true,
   autoRefreshIntervalMinutes: 5,
   useApi: false,
-  apiUrl: "https://veredicto.up.railway.app/api/analisar",
+  apiUrl: "http://localhost:8787/api/analisar",
   apiToken: ""
 };
 

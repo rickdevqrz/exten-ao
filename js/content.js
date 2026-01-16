@@ -41,7 +41,7 @@
     return {
       sensitivity: "media",
       useApi: false,
-      apiUrl: "https://veredicto.up.railway.app/api/analisar",
+      apiUrl: "http://localhost:8787/api/analisar",
       apiToken: ""
     };
   }
