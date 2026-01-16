@@ -389,6 +389,10 @@ body[data-view="query"] .system-status {
   font-size: 13px;
   font-weight: 700;
   color: var(--text);
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .icon-btn {

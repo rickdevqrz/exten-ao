@@ -436,7 +436,8 @@ function renderResult(result) {
     scoreLabelEl.textContent = getScoreLabel(score);
     levelPillEl.textContent = `Nivel ${levelMeta.level}/5`;
     if (levelTopLabelEl) {
-      levelTopLabelEl.textContent = formatVerdict(result.verdict || levelMeta.label);
+      const bannerText = formatVerdict(result.verdict || levelMeta.label);
+      levelTopLabelEl.textContent = trimText(bannerText, 32);
     }
     trustPillEl.textContent = levelMeta.label;
     trustPillEl.className = levelMeta.className;

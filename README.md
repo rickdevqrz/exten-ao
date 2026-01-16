@@ -3,6 +3,9 @@
 ## Visao geral
 Extensao para Chrome que analisa o texto da pagina, gera um indice de suspeita e apresenta um veredito curto com motivo principal. A verificacao por fontes pode usar servidor publico ou servidor proprio.
 
+## Contexto atual
+O Brasil vive um momento de alta polarizacao politica e grande circulacao de desinformacao, principalmente em redes sociais e aplicativos de mensagem. Este projeto existe para ajudar o usuario a olhar para sinais objetivos e buscar fontes confiaveis antes de compartilhar.
+
 ## O que faz
 - Analisa texto localmente e gera um indice de suspeita.
 - Mostra veredito, motivo principal e resumo do nivel.
@@ -125,5 +128,5 @@ git push -u origin main
 - Melhorar deduplicacao de fontes e explicacao dos motivos.
 - Testar ranking de confiabilidade por veiculo.
 - Refinar satira e contexto para reduzir falsos positivos.
-- Usar IA no futuro para melhorar desempenho e acertividade com transparencia.
+- Usar IA em futuras atualizacoes para melhorar acuracia e manter transparencia.
 - Publicar na Chrome Web Store quando o projeto estiver finalizado.
