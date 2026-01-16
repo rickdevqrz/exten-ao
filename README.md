@@ -27,16 +27,12 @@ Este e um projeto pessoal e educacional. A ideia e estudar desinformacao e enten
 - Nao ha rastreamento de usuarios.
 
 ## Instalacao (Chrome - modo desenvolvedor)
+
+### Opcao A: instalar apenas a extensao (mais simples)
 1) Baixar a extensao  
 - Pegue a ultima release em:  
   `https://github.com/rickdevqrz/exten-ao/releases/latest`  
 - Baixe o `.zip` e extraia em uma pasta.
-  
-Opcao alternativa (clonar o repositorio):
-```bash
-git clone https://github.com/rickdevqrz/exten-ao.git
-cd exten-ao
-```
 
 2) Carregar no Chrome  
 - Abra `chrome://extensions`.  
@@ -48,6 +44,15 @@ cd exten-ao
 - Abra **Opcoes** da extensao.  
 - Ative **Verificacao com fontes (Serper/RSS)**.  
 - Use a URL padrao ou informe seu servidor.
+
+### Opcao B: clonar o repositorio (para servidor local e ajustes)
+1) Clonar o projeto:
+```bash
+git clone https://github.com/rickdevqrz/exten-ao.git
+cd exten-ao
+```
+2) Instalar a extensao no Chrome (mesmos passos da Opcao A).
+3) Configurar e rodar o servidor local (veja a secao abaixo).
 
 ## Servidor local (opcional)
 Este modo permite rodar o servidor no seu PC e configurar credenciais de API.
