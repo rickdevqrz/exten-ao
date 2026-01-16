@@ -1,138 +1,71 @@
-# Detector de Fake News (BR)
+# Detector de Fake News (BR) - Extensao para analise de noticias
 
-## Visao geral
-Extensao para Chrome que analisa o texto da pagina, gera um indice de suspeita e apresenta um veredito curto com motivo principal. A verificacao por fontes pode usar servidor publico ou servidor proprio.
+Extensao do Chrome para analise de noticias em portugues. Ela calcula um indice de suspeita com heuristicas locais e, se ativado, consulta fontes confiaveis via um servidor para apoiar o veredito.
 
-## Contexto atual
-O Brasil vive um momento de alta polarizacao politica e grande circulacao de desinformacao, principalmente em redes sociais e aplicativos de mensagem. Este projeto existe para ajudar o usuario a olhar para sinais objetivos e buscar fontes confiaveis antes de compartilhar.
+## Motivacao
+Este e um projeto pessoal e educacional. A ideia e estudar desinformacao e entender quais sinais objetivos aparecem em textos suspeitos, sem prometer uma resposta definitiva.
 
-## O que faz
-- Analisa texto localmente e gera um indice de suspeita.
-- Mostra veredito, motivo principal e resumo do nivel.
-- Consulta fontes externas por servidor publico ou proprio.
-- Permite pesquisar assuntos e listar noticias recentes.
-- Permite compartilhar noticias nos niveis 1 a 3 (WhatsApp, Telegram, Twitter, Instagram).
+## Principais funcionalidades
+- Analise local do texto da pagina e indice de suspeita.
+- Veredito curto, motivo principal e resumo do nivel.
+- Consulta de fontes via servidor (Serper/RSS) quando ativado.
+- Pesquisa de assuntos e listagem de noticias recentes.
+- Compartilhamento habilitado apenas para niveis 1 a 3 (WhatsApp, Telegram, Twitter e Instagram).
+- Tema da interface e atualizacao automatica configuravel.
 
-## O que nao faz
-- Nao define verdade absoluta.
-- Nao substitui checagem jornalistica.
-- Nao desbloqueia paywall.
-- Pode falhar em paginas sem texto claro.
+## Limitacoes importantes
+- O resultado nao e verdade absoluta e pode errar.
+- Noticias muito recentes podem ter poucas fontes.
+- Conteudo satirico/opinativo pode gerar falsos positivos.
+- Paginas com pouco texto ou paywall podem falhar.
+- As fontes sao restritas a uma allowlist de veiculos.
 
-## Decisoes tecnicas
-- Heuristicas transparentes foram escolhidas para facilitar a explicacao do resultado.
-- A analise local e separada da verificacao por fontes para manter velocidade e privacidade.
-- O servidor externo (publico ou proprio) protege chaves e faz consultas na web.
-- Uma allowlist prioriza veiculos confiaveis e reduz ruido.
+## Privacidade e uso de dados
+- A analise local acontece no navegador.
+- Se a verificacao com fontes estiver ativada, a extensao envia titulo, texto, URL e sensibilidade para o servidor.
+- O servidor nao armazena conteudo; apenas processa a requisicao e retorna o resultado.
+- Nao ha rastreamento de usuarios.
 
-## Limitacoes conhecidas
-- Noticias muito recentes podem aparecer com poucas fontes.
-- Conteudo satirico ou opinativo pode gerar falsos positivos.
-- Textos curtos podem distorcer o indice.
-
-## Privacidade e etica
-- Nao coleta dados pessoais.
-- Nao rastreia usuarios.
-- Nao censura conteudo.
-- Mantem o resultado explicavel para o usuario decidir.
-
-## Tutoriais (duas opcoes)
-### Opcao A: usar servidor publico (mais simples)
+## Instalacao (Chrome - modo desenvolvedor)
 1) Baixar a extensao  
-- Acesse a ultima release:  
+- Pegue a ultima release em:  
   `https://github.com/rickdevqrz/exten-ao/releases/latest`  
-- Baixe `extensao-release.rar` (ou `.zip`).  
-- Extraia os arquivos em uma pasta.  
+- Baixe o `.zip` e extraia em uma pasta.
 
-2) Instalar no Chrome  
+2) Carregar no Chrome  
 - Abra `chrome://extensions`.  
-- Ative o **Modo do desenvolvedor**.  
+- Ative **Modo do desenvolvedor**.  
 - Clique em **Carregar sem compactacao**.  
-- Selecione a pasta extraida.  
+- Selecione a pasta extraida.
 
-3) Testar  
-- Abra uma noticia em um site comum.  
-- Clique no icone da extensao.  
-- Use **Analisar** e verifique veredito, motivo e fontes.  
+3) (Opcional) Ativar verificacao com fontes  
+- Abra **Opcoes** da extensao.  
+- Ative **Verificacao com fontes (Serper/RSS)**.  
+- Use a URL padrao ou informe seu servidor.
 
-Observacao  
-- A extensao ja vem configurada para:  
-  `https://veredicto.up.railway.app/api/analisar`  
-- Se o servidor estiver fora do ar, a extensao continua funcionando com heuristica local.  
-- A verificacao com fontes vem desativada por padrao; ative em **Opcoes** quando quiser usar o servidor.  
+## Uso basico
+1) Abra uma noticia.
+2) Clique no icone da extensao.
+3) Clique em **Analisar**.
+4) Leia veredito, motivos e fontes.
+5) Compartilhe apenas se o nivel for 1, 2 ou 3.
 
-### Opcao B: usar servidor proprio (local ou hospedado)
-1) Baixar o codigo  
-- Clone o repositorio ou baixe o ZIP.  
+## Estrutura do projeto (breve)
+- `manifest.json` - configuracao da extensao.
+- `popup.html`, `css/popup.css`, `js/popup.js` - interface principal.
+- `js/content.js` - leitura do texto da pagina.
+- `js/background.js` - comunicacao com a API.
+- `options.html`, `css/options.css`, `js/options.js` - pagina de configuracoes.
+- `server/` - servidor opcional para busca de fontes.
 
-2) Iniciar o servidor local  
-- Entre na pasta `server`.  
-- Copie `server/.env.example` para `server/.env`.  
-- Preencha `SERPER_API_KEY` se quiser resultados melhores (opcional).  
-- Rode:  
-```bash
-cd server
-npm install
-npm run dev
-```
-- Teste: `http://localhost:8787/health`  
+## Aviso legal
+Este projeto nao substitui checagem jornalistica. Ele apenas auxilia o usuario a refletir antes de compartilhar.
 
-3) Instalar a extensao  
-- Use a release ou a pasta do projeto.  
-
-4) Apontar para o seu servidor  
-- Em **Opcoes**, ative **Verificacao com fontes (Serper/RSS)**.  
-- Informe a URL do seu servidor, por exemplo:  
-  `http://localhost:8787/api/analisar`  
-- Se voce definiu `API_TOKEN` no servidor, preencha o Token da API na extensao.  
-
-## Configuracoes
-Disponiveis em **Opcoes**:
-- Sensibilidade (baixa, media, alta).
-- Verificacao com fontes (Serper/RSS).
-- URL da API para servidor proprio (padrao: `https://veredicto.up.railway.app/api/analisar`).
-- Token da API (quando o servidor exigir).
-- Tema da interface.
-- Atualizacao automatica do resultado.
-  
-Compartilhamento:
-- Disponivel apenas para noticias nos niveis 1, 2 e 3.
-- Redes suportadas: WhatsApp, Telegram, Twitter e Instagram.
-
-## Servidor proprio (detalhes)
-O servidor proprio e opcional e serve para controle total.
-
-```bash
-cd server
-npm install
-npm run dev
-```
-
-Formato de request esperado:
-```json
-{
-  "title": "Titulo da pagina",
-  "text": "Texto principal",
-  "url": "https://exemplo.com",
-  "sensitivity": "media"
-}
-```
-
-Variaveis extras (opcionais):
-- `API_TOKEN`: protege o endpoint com `X-API-Token`.
-- `FETCH_URL_ENABLED`: ativa/desativa o fetch de URL pelo servidor.
-
-## Protecao de chaves
-- Guarde chaves em `server/.env`.
-- Publique apenas `server/.env.example`.
-- Mantenha `.env` e `node_modules` no `.gitignore`.
+## Prints (opcional)
+Sugestao: adicione capturas da tela do popup e da tela de opcoes para facilitar o entendimento.
 
 ## Nota do autor
-Tive ajuda de IA como assistente em partes do desenvolvimento. Tambem fiz alteracoes manuais ao longo do codigo. Ainda assim, eu conduzi as decisoes principais: definir criterios, ajustar a logica, validar resultados e refinar a experiencia.
+Tive ajuda de IA como assistente em partes do desenvolvimento e tambem fiz alteracoes manuais no codigo.
 
-## Proximos passos
-- Melhorar deduplicacao de fontes e explicacao dos motivos.
-- Testar ranking de confiabilidade por veiculo.
-- Refinar satira e contexto para reduzir falsos positivos.
-- Usar IA em futuras atualizacoes para melhorar acuracia e manter transparencia.
-- Publicar na Chrome Web Store quando o projeto estiver finalizado.
+## Licenca
+Sem licenca definida no momento.
