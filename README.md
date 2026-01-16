@@ -1,71 +1,103 @@
 # Detector de Fake News (BR)
 
-## Introducao
-Eu criei esta extensao para estudar como noticias falsas se espalham e como pequenos sinais no texto podem indicar conteudo enganoso. O objetivo nao e apontar uma verdade absoluta; eu queria criar uma ferramenta simples que ajudasse o usuario a refletir antes de compartilhar.
+## Visao geral
+Extensao para Chrome que analisa o texto da pagina, gera um indice de suspeita e apresenta um veredito curto com motivo principal. A verificacao por fontes pode usar servidor publico ou servidor proprio.
 
-## O que a extensao faz (e o que nao faz)
-- Eu analiso o texto da pagina localmente e gero um indice de suspeita com base em sinais objetivos.
-- Eu mostro um veredito curto, um motivo principal e um resumo do nivel, sempre junto das fontes quando a verificacao externa esta ativa.
-- Eu permito pesquisar um assunto e listar noticias recentes para o usuario escolher a materia.
-- Eu nao determino verdade absoluta, nao substituo checagem jornalistica e nao garanto acerto em 100% dos casos.
-- Eu nao desbloqueio paywall nem consigo analisar paginas sem texto principal claro.
+## O que faz
+- Analisa texto localmente e gera um indice de suspeita.
+- Mostra veredito, motivo principal e resumo do nivel.
+- Consulta fontes externas por servidor publico ou proprio.
+- Permite pesquisar assuntos e listar noticias recentes.
+
+## O que nao faz
+- Nao define verdade absoluta.
+- Nao substitui checagem jornalistica.
+- Nao desbloqueia paywall.
+- Pode falhar em paginas sem texto claro.
 
 ## Decisoes tecnicas
-- Eu preferi heuristicas simples e transparentes porque queria entender exatamente por que um conteudo foi considerado suspeito.
-- Eu separei a analise local da verificacao por fontes para manter velocidade e privacidade na extensao.
-- Eu optei por um servidor externo para buscar fontes, porque o navegador tem limitacoes de rede e eu preciso proteger chaves de API.
-- Eu priorizei fontes confiaveis e uma allowlist porque queria reduzir ruido e dar mais peso a veiculos reconhecidos.
+- Heuristicas transparentes foram escolhidas para facilitar a explicacao do resultado.
+- A analise local e separada da verificacao por fontes para manter velocidade e privacidade.
+- O servidor externo (publico ou proprio) protege chaves e faz consultas na web.
+- Uma allowlist prioriza veiculos confiaveis e reduz ruido.
 
-## Limitacoes assumidas
-- Eu sei que noticias muito recentes podem aparecer com poucas fontes confiaveis.
-- Eu sei que satira, opiniao e humor podem gerar falsos positivos.
-- Eu sei que textos curtos ou com pouco contexto podem distorcer o indice.
-- Eu assumo que a heuristica nao entende intencao; ela apenas soma sinais.
+## Limitacoes conhecidas
+- Noticias muito recentes podem aparecer com poucas fontes.
+- Conteudo satirico ou opinativo pode gerar falsos positivos.
+- Textos curtos podem distorcer o indice.
 
-## Etica e responsabilidade
-Eu nao coleto dados pessoais, nao rastreio usuarios e nao censuro conteudo. Eu deixei o sistema transparente de proposito para que o usuario entenda o motivo do resultado e tome sua propria decisao.
+## Privacidade e etica
+- Nao coleta dados pessoais.
+- Nao rastreia usuarios.
+- Nao censura conteudo.
+- Mantem o resultado explicavel para o usuario decidir.
 
-## Tutorial rapido (extensao pronta)
-### 1) Baixar a extensao
-- Eu baixo a ultima release em:
-  `https://github.com/rickdevqrz/exten-ao/releases/latest`
-- Eu escolho o arquivo `extensao-release.rar` (ou `.zip`).
-- Eu extraio os arquivos em uma pasta.
+## Tutoriais (duas opcoes)
+### Opcao A: usar servidor publico (mais simples)
+1) Baixar a extensao  
+- Acesse a ultima release:  
+  `https://github.com/rickdevqrz/exten-ao/releases/latest`  
+- Baixe `extensao-release.rar` (ou `.zip`).  
+- Extraia os arquivos em uma pasta.  
 
-### 2) Instalar no Chrome
-- Eu abro `chrome://extensions`.
-- Eu ativo o **Modo do desenvolvedor**.
-- Eu clico em **Carregar sem compactacao**.
-- Eu seleciono a pasta extraida.
+2) Instalar no Chrome  
+- Abra `chrome://extensions`.  
+- Ative o **Modo do desenvolvedor**.  
+- Clique em **Carregar sem compactacao**.  
+- Selecione a pasta extraida.  
 
-### 3) Testar
-- Eu abro uma noticia em um site comum.
-- Eu clico no icone da extensao.
-- Eu uso **Analisar** e verifico o veredito, o motivo e as fontes.
+3) Testar  
+- Abra uma noticia em um site comum.  
+- Clique no icone da extensao.  
+- Use **Analisar** e verifique veredito, motivo e fontes.  
 
-### Observacao
-- Eu deixei a extensao configurada para usar o servidor publico em
-  `https://veredicto.up.railway.app/api/analisar`.
-- Eu nao preciso configurar servidor local para usar o basico.
+Observacao  
+- A extensao ja vem configurada para:  
+  `https://veredicto.up.railway.app/api/analisar`  
+- Se o servidor estiver fora do ar, a extensao continua funcionando com heuristica local.  
 
-## Como eu testo
-1. Eu abro uma noticia em um site comum.
-2. Eu clico no icone da extensao.
-3. Eu uso **Analisar** para gerar o indice.
-4. Eu confiro o veredito, o motivo e as fontes retornadas.
+### Opcao B: usar servidor proprio (local ou hospedado)
+1) Baixar o codigo  
+- Clone o repositorio ou baixe o ZIP.  
+
+2) Iniciar o servidor local  
+- Entre na pasta `server`.  
+- Copie `server/.env.example` para `server/.env`.  
+- Preencha `SERPER_API_KEY` se quiser resultados melhores (opcional).  
+- Rode:  
+```bash
+cd server
+npm install
+npm run dev
+```
+- Teste: `http://localhost:8787/health`  
+
+3) Instalar a extensao  
+- Use a release ou a pasta do projeto.  
+
+4) Apontar para o seu servidor  
+- Em **Opcoes**, ative **Verificacao com fontes (Serper/RSS)**.  
+- Informe a URL do seu servidor, por exemplo:  
+  `http://localhost:8787/api/analisar`  
 
 ## Configuracoes
-Eu deixei uma pagina de configuracoes com ajustes basicos:
-- Eu controlo a sensibilidade (baixa, media, alta).
-- Eu ativo a verificacao com fontes (Serper/RSS) quando quero checar noticias na web.
-- Eu aponto outra URL da API quando quero usar meu proprio servidor.
-- Eu mudo o tema da interface quando preciso.
-- Eu ligo a atualizacao automatica quando quero recarregar analises recentes.
+Disponiveis em **Opcoes**:
+- Sensibilidade (baixa, media, alta).
+- Verificacao com fontes (Serper/RSS).
+- URL da API para servidor proprio (padrao: `https://veredicto.up.railway.app/api/analisar`).
+- Tema da interface.
+- Atualizacao automatica do resultado.
 
-## Servidor local (opcional)
-Eu so preciso disso se eu quiser controle total. Quando ele esta ativo, eu envio `title`, `text` e `url`, e recebo o score com as fontes.
+## Servidor proprio (detalhes)
+O servidor proprio e opcional e serve para controle total.
 
-Quando eu envio dados para o servidor, eu uso este formato:
+```bash
+cd server
+npm install
+npm run dev
+```
+
+Formato de request esperado:
 ```json
 {
   "title": "Titulo da pagina",
@@ -75,24 +107,23 @@ Quando eu envio dados para o servidor, eu uso este formato:
 }
 ```
 
-Se eu nao configurar chaves externas, a extensao continua funcionando com a heuristica local.
+## Protecao de chaves
+- Guarde chaves em `server/.env`.
+- Publique apenas `server/.env.example`.
+- Mantenha `.env` e `node_modules` no `.gitignore`.
 
-## Como eu protejo minhas chaves
-- Eu guardo minhas chaves em `server/.env`.
-- Eu publico apenas `server/.env.example`, sem valores reais.
-- Eu mantenho `.env` e `node_modules` no `.gitignore` para nao subir nada sensivel.
-- Eu reviso `git status` antes de publicar.
-
-## Como eu publico no GitHub
-- Eu inicio o repositorio com `git init`.
-- Eu adiciono os arquivos com `git add .`.
-- Eu crio o commit com `git commit -m "Initial commit"`.
-- Eu crio o repositorio no GitHub e conecto com `git remote add origin URL_DO_REPO`.
-- Eu envio o codigo com `git push -u origin main`.
+## Publicar no GitHub (opcional)
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin URL_DO_REPO
+git push -u origin main
+```
 
 ## Proximos passos
-- Eu gostaria de melhorar a deduplicacao de fontes e a explicacao dos motivos.
-- Eu quero testar modelos de ranking de confiabilidade por veiculo.
-- Eu pretendo estudar melhor satira e contexto para reduzir falsos positivos.
-- Eu pretendo usar IA no futuro para melhorar desempenho e acertividade, com cuidado para manter transparencia.
-- Eu pretendo publicar a extensao na Chrome Web Store quando eu considerar o projeto finalizado.
+- Melhorar deduplicacao de fontes e explicacao dos motivos.
+- Testar ranking de confiabilidade por veiculo.
+- Refinar satira e contexto para reduzir falsos positivos.
+- Usar IA no futuro para melhorar desempenho e acertividade com transparencia.
+- Publicar na Chrome Web Store quando o projeto estiver finalizado.
