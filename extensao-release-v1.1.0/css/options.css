@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap");
+
+:root {
+  color-scheme: light;
+}
+
+body[data-theme="tech"] {
+  color-scheme: dark;
+  --bg-1: #0b0f14;
+  --bg-2: #0a0f19;
+  --surface: #151b26;
+  --surface-2: #1b2433;
+  --ink: #eef2f8;
+  --muted: #9aa3b2;
+  --accent: #4ce88d;
+  --accent-2: #4cc9f0;
+  --line: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+body[data-theme="slate"] {
+  color-scheme: dark;
+  --bg-1: #0d121a;
+  --bg-2: #0a0e15;
+  --surface: #141b2a;
+  --surface-2: #1b2638;
+  --ink: #e8eef6;
+  --muted: #96a3b9;
+  --accent: #5fb7ff;
+  --accent-2: #7ef0ff;
+  --line: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(0, 0, 0, 0.38);
+}
+
+body[data-theme="sand"] {
+  color-scheme: light;
+  --bg-1: #f6f3ee;
+  --bg-2: #e9e2d7;
+  --surface: #ffffff;
+  --surface-2: #f3efe7;
+  --ink: #1f242b;
+  --muted: #5b6575;
+  --accent: #2f9f6b;
+  --accent-2: #f6a84b;
+  --line: rgba(31, 36, 43, 0.15);
+  --shadow: rgba(31, 31, 31, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Sora", "Trebuchet MS", "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  color: var(--ink);
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px 40px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+}
+
+header p {
+  margin: 0 0 24px;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 30px var(--shadow);
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+select,
+input[type="url"],
+input[type="password"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink);
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #0b1510;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.status {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.hint {
+  margin: -8px 0 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 8px;
+  color: var(--muted);
+}

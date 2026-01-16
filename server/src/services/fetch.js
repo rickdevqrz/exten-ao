@@ -1,6 +1,7 @@
 ﻿import * as cheerio from "cheerio";
 import { config } from "../config.js";
 import { isSafeUrl } from "../utils/safe-url.js";
+import { isLikelyNewsUrl } from "../utils/source-filter.js";
 
 function timeoutPromise(ms, controller) {
   return new Promise((_, reject) =>
@@ -39,7 +40,10 @@ function extractText(html) {
 
 async function fetchOne(item) {
   try {
-    if (!item || !(await isSafeUrl(item.url))) {
+    if (!item || !isLikelyNewsUrl(item.url, config.allowlist)) {
+      return null;
+    }
+    if (!(await isSafeUrl(item.url))) {
       return null;
     }
     const controller = new AbortController();
@@ -57,6 +61,11 @@ async function fetchOne(item) {
     ]);
 
     if (!response.ok) {
+      return null;
+    }
+
+    const contentType = String(response.headers.get("content-type") || "").toLowerCase();
+    if (!contentType.includes("text/html") && !contentType.includes("application/xhtml+xml")) {
       return null;
     }
 

@@ -1,0 +1,79 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Configuracoes - Detector de Fake News</title>
+    <link rel="stylesheet" href="css/options.css" />
+  </head>
+  <body data-theme="tech">
+    <main class="container">
+      <header>
+        <h1>Configuracoes</h1>
+        <p>Ajuste a sensibilidade e, se desejar, integre uma API externa.</p>
+      </header>
+
+      <section class="card">
+        <label for="sensitivity">Sensibilidade</label>
+        <select id="sensitivity">
+          <option value="baixa">Baixa</option>
+          <option value="media">Media</option>
+          <option value="alta">Alta</option>
+        </select>
+
+        <div class="toggle">
+          <input type="checkbox" id="useApi" />
+          <label for="useApi">Usar verificacao com fontes (Serper/RSS)</label>
+        </div>
+
+        <label for="apiUrl">URL da API</label>
+        <input
+          type="url"
+          id="apiUrl"
+          placeholder="https://veredicto.up.railway.app/api/analisar"
+        />
+
+        <label for="apiToken">Token da API (opcional)</label>
+        <input
+          type="password"
+          id="apiToken"
+          placeholder="Token da API, se configurado no servidor"
+        />
+      </section>
+
+      <section class="card">
+        <h2>Interface e atualizacao</h2>
+
+        <label for="theme">Tema</label>
+        <select id="theme">
+          <option value="tech">Tech</option>
+          <option value="slate">Noite</option>
+          <option value="sand">Claro</option>
+        </select>
+
+        <div class="toggle">
+          <input type="checkbox" id="autoRefresh" />
+          <label for="autoRefresh">Atualizar analise automaticamente</label>
+        </div>
+
+        <label for="refreshInterval">Intervalo de atualizacao (minutos)</label>
+        <input type="number" id="refreshInterval" min="1" max="60" step="1" />
+        <p class="hint">Minimo 1 minuto para evitar recarregamentos excessivos.</p>
+
+        <button id="save" class="primary">Salvar configuracoes</button>
+        <div id="status" class="status"></div>
+      </section>
+
+      <section class="card">
+        <h2>Observacoes</h2>
+        <ul>
+          <li>Quando a verificacao com fontes estiver ativada, a API sera usada para analisar o conteudo.</li>
+          <li>Se a API falhar, a analise local sera aplicada automaticamente.</li>
+          <li>Se o servidor exigir token, preencha o campo de Token da API.</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="js/options.js"></script>
+  </body>
+</html>

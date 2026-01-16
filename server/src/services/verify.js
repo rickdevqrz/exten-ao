@@ -2,6 +2,7 @@
 import { searchEvidence, hasSerperKey } from "./search.js";
 import { fetchEvidencePages } from "./fetch.js";
 import { searchNewsRss } from "./rss.js";
+import { isLikelyNewsUrl, normalizeSourceDomain } from "../utils/source-filter.js";
 
 const cache = new Map();
 
@@ -102,15 +103,6 @@ function heuristicScoreDetails({ title, text, url }) {
   return { score: Math.min(30, score), reasons };
 }
 
-function normalizeDomain(input) {
-  try {
-    const domain = new URL(input).hostname || "";
-    return domain.replace(/^www\./i, "").toLowerCase();
-  } catch (err) {
-    return String(input || "").replace(/^www\./i, "").toLowerCase();
-  }
-}
-
 function getSourceGroup(domain) {
   const groups = config.sourceGroups || {};
   const entries = Object.entries(groups);
@@ -131,7 +123,7 @@ function getSourceStats(sources) {
   let factcheckCount = 0;
 
   for (const source of sources || []) {
-    const domain = normalizeDomain(source.domain || source.url || "");
+    const domain = normalizeSourceDomain(source.domain || source.url || "");
     if (!domain) continue;
     const group = getSourceGroup(domain);
     if (group === "agency") {
@@ -156,12 +148,13 @@ function getSourceStats(sources) {
 
 function filterSourcesList(sources, targetUrl, options = {}) {
   const dedupeByDomain = options.dedupeByDomain !== false;
-  const targetDomain = normalizeDomain(targetUrl || "");
+  const targetDomain = normalizeSourceDomain(targetUrl || "");
   const seen = new Set();
   const filtered = [];
 
   for (const src of sources || []) {
-    const domain = normalizeDomain(src.url || src.domain || "");
+    if (!isLikelyNewsUrl(src.url || "", config.allowlist)) continue;
+    const domain = normalizeSourceDomain(src.url || src.domain || "");
     if (!domain) continue;
     if (targetDomain && domain === targetDomain) continue;
     const key = dedupeByDomain ? domain : src.url || domain;
@@ -181,7 +174,7 @@ function resultsToSources(results) {
   return (results || [])
     .map((item) => {
       const url = item.url || "";
-      const domain = item.domain || normalizeDomain(url);
+      const domain = item.domain || normalizeSourceDomain(url);
       if (!url && !domain) return null;
       return {
         url,
