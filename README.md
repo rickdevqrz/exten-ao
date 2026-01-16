@@ -128,16 +128,7 @@ Variaveis extras (opcionais):
 - Mantenha `.env` e `node_modules` no `.gitignore`.
 
 ## Nota do autor
-Tive ajuda de IA como assistente em partes do desenvolvimento. Ainda assim, eu conduzi as decisoes principais: definir criterios, ajustar a logica, validar resultados e refinar a experiencia.
-
-## Publicar no GitHub (opcional)
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git remote add origin URL_DO_REPO
-git push -u origin main
-```
+Tive ajuda de IA como assistente em partes do desenvolvimento. Tambem fiz alteracoes manuais ao longo do codigo. Ainda assim, eu conduzi as decisoes principais: definir criterios, ajustar a logica, validar resultados e refinar a experiencia.
 
 ## Proximos passos
 - Melhorar deduplicacao de fontes e explicacao dos motivos.
