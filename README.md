@@ -28,6 +28,11 @@ Eu nao coleto dados pessoais, nao rastreio usuarios e nao censuro conteudo. Eu d
 ## Tutorial completo (extensao + servidor)
 ### 1) Baixar o codigo
 - Eu baixo o ZIP do projeto ou clono o repositorio.
+- Eu uso:
+```bash
+git clone https://github.com/rickdevqrz/exten-ao.git
+cd exten-ao
+```
 
 ### 2) Preparar o servidor local (opcional, mas recomendado)
 - Eu instalo o Node.js 18+.
