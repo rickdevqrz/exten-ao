@@ -1,6 +1,7 @@
 const sensitivityEl = document.getElementById("sensitivity");
 const useApiEl = document.getElementById("useApi");
 const apiUrlEl = document.getElementById("apiUrl");
+const apiTokenEl = document.getElementById("apiToken");
 const themeEl = document.getElementById("theme");
 const autoRefreshEl = document.getElementById("autoRefresh");
 const refreshIntervalEl = document.getElementById("refreshInterval");
@@ -9,8 +10,9 @@ const statusEl = document.getElementById("status");
 
 const DEFAULTS = {
   sensitivity: "media",
-  useApi: true,
+  useApi: false,
   apiUrl: "https://veredicto.up.railway.app/api/analisar",
+  apiToken: "",
   theme: "tech",
   autoRefreshEnabled: true,
   autoRefreshIntervalMinutes: 5
@@ -37,6 +39,9 @@ function loadOptions() {
     sensitivityEl.value = items.sensitivity || "media";
     useApiEl.checked = Boolean(items.useApi);
     apiUrlEl.value = items.apiUrl || "";
+    if (apiTokenEl) {
+      apiTokenEl.value = items.apiToken || "";
+    }
     themeEl.value = items.theme || DEFAULTS.theme;
     autoRefreshEl.checked = Boolean(items.autoRefreshEnabled);
     refreshIntervalEl.value = clampInterval(Number(items.autoRefreshIntervalMinutes));
@@ -51,6 +56,7 @@ function saveOptions() {
     sensitivity: sensitivityEl.value,
     useApi: useApiEl.checked,
     apiUrl: apiUrlEl.value.trim(),
+    apiToken: apiTokenEl ? apiTokenEl.value.trim() : "",
     theme: themeEl.value,
     autoRefreshEnabled: autoRefreshEl.checked,
     autoRefreshIntervalMinutes: interval

@@ -256,6 +256,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "API_ANALYZE") {
     const payload = message.payload || {};
     const apiUrl = message.apiUrl;
+    const apiToken = message.apiToken;
 
     (async () => {
       if (!apiUrl) {
@@ -266,10 +267,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 60000);
+        const headers = { "Content-Type": "application/json" };
+        if (apiToken) {
+          headers["X-API-Token"] = apiToken;
+        }
 
         const response = await fetch(apiUrl, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify(payload),
           signal: controller.signal
         });

@@ -11,6 +11,7 @@ O Brasil vive um momento de alta polarizacao politica e grande circulacao de des
 - Mostra veredito, motivo principal e resumo do nivel.
 - Consulta fontes externas por servidor publico ou proprio.
 - Permite pesquisar assuntos e listar noticias recentes.
+- Permite compartilhar noticias nos niveis 1 a 3 (WhatsApp, Telegram, Twitter, Instagram).
 
 ## O que nao faz
 - Nao define verdade absoluta.
@@ -58,6 +59,7 @@ Observacao
 - A extensao ja vem configurada para:  
   `https://veredicto.up.railway.app/api/analisar`  
 - Se o servidor estiver fora do ar, a extensao continua funcionando com heuristica local.  
+- A verificacao com fontes vem desativada por padrao; ative em **Opcoes** quando quiser usar o servidor.  
 
 ### Opcao B: usar servidor proprio (local ou hospedado)
 1) Baixar o codigo  
@@ -82,14 +84,20 @@ npm run dev
 - Em **Opcoes**, ative **Verificacao com fontes (Serper/RSS)**.  
 - Informe a URL do seu servidor, por exemplo:  
   `http://localhost:8787/api/analisar`  
+- Se voce definiu `API_TOKEN` no servidor, preencha o Token da API na extensao.  
 
 ## Configuracoes
 Disponiveis em **Opcoes**:
 - Sensibilidade (baixa, media, alta).
 - Verificacao com fontes (Serper/RSS).
 - URL da API para servidor proprio (padrao: `https://veredicto.up.railway.app/api/analisar`).
+- Token da API (quando o servidor exigir).
 - Tema da interface.
 - Atualizacao automatica do resultado.
+  
+Compartilhamento:
+- Disponivel apenas para noticias nos niveis 1, 2 e 3.
+- Redes suportadas: WhatsApp, Telegram, Twitter e Instagram.
 
 ## Servidor proprio (detalhes)
 O servidor proprio e opcional e serve para controle total.
@@ -110,10 +118,17 @@ Formato de request esperado:
 }
 ```
 
+Variaveis extras (opcionais):
+- `API_TOKEN`: protege o endpoint com `X-API-Token`.
+- `FETCH_URL_ENABLED`: ativa/desativa o fetch de URL pelo servidor.
+
 ## Protecao de chaves
 - Guarde chaves em `server/.env`.
 - Publique apenas `server/.env.example`.
 - Mantenha `.env` e `node_modules` no `.gitignore`.
+
+## Nota do autor
+Tive ajuda de IA como assistente em partes do desenvolvimento, mas a parte mais dificil foi feita por mim: definir criterios, ajustar a logica, validar resultados e refinar a experiencia.
 
 ## Publicar no GitHub (opcional)
 ```bash

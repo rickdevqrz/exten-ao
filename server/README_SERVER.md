@@ -4,7 +4,8 @@ Servidor local em Node.js que verifica alegacoes usando OpenAI + busca web via S
 
 ## Requisitos
 - Node.js 18+
-- Chaves: `OPENAI_API_KEY` e `SERPER_API_KEY`
+- Chaves opcionais: `SERPER_API_KEY` e `OPENAI_API_KEY`
+- Token opcional: `API_TOKEN` (para proteger o endpoint)
 
 ## Como rodar
 ```bash
@@ -47,3 +48,4 @@ Response:
 - Se faltar `SERPER_API_KEY`, o servidor retorna `mode: heuristic_fallback`.
 - Nao loga conteudo completo do usuario (somente tamanhos e dominio).
 - O CORS aceita `localhost` e `chrome-extension://*`.
+- Se `API_TOKEN` estiver definido, envie `X-API-Token` nas requisicoes.

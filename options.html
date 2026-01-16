@@ -32,6 +32,13 @@
           id="apiUrl"
           placeholder="https://veredicto.up.railway.app/api/analisar"
         />
+
+        <label for="apiToken">Token da API (opcional)</label>
+        <input
+          type="password"
+          id="apiToken"
+          placeholder="Token da API, se configurado no servidor"
+        />
       </section>
 
       <section class="card">
@@ -62,6 +69,7 @@
         <ul>
           <li>Quando a verificacao com fontes estiver ativada, a API sera usada para analisar o conteudo.</li>
           <li>Se a API falhar, a analise local sera aplicada automaticamente.</li>
+          <li>Se o servidor exigir token, preencha o campo de Token da API.</li>
         </ul>
       </section>
     </main>

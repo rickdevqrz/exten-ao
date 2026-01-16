@@ -1,5 +1,6 @@
 import * as cheerio from "cheerio";
 import { config } from "../config.js";
+import { isSafeUrl } from "../utils/safe-url.js";
 
 function timeoutPromise(ms, controller) {
   return new Promise((_, reject) =>
@@ -127,6 +128,7 @@ function extractMeta($, baseUrl, text) {
 
 export async function fetchArticle(url) {
   if (!url) return null;
+  if (!(await isSafeUrl(url))) return null;
   try {
     const controller = new AbortController();
     const fetchPromise = fetch(url, {

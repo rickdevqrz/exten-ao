@@ -40,8 +40,9 @@
   function getDefaultOptions() {
     return {
       sensitivity: "media",
-      useApi: true,
-      apiUrl: "https://veredicto.up.railway.app/api/analisar"
+      useApi: false,
+      apiUrl: "https://veredicto.up.railway.app/api/analisar",
+      apiToken: ""
     };
   }
 
@@ -390,7 +391,8 @@
           const apiResponse = await chrome.runtime.sendMessage({
             type: "API_ANALYZE",
             payload,
-            apiUrl: options.apiUrl
+            apiUrl: options.apiUrl,
+            apiToken: options.apiToken
           });
 
           if (apiResponse && apiResponse.ok && apiResponse.result) {

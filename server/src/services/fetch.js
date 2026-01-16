@@ -1,5 +1,6 @@
 ﻿import * as cheerio from "cheerio";
 import { config } from "../config.js";
+import { isSafeUrl } from "../utils/safe-url.js";
 
 function timeoutPromise(ms, controller) {
   return new Promise((_, reject) =>
@@ -38,6 +39,9 @@ function extractText(html) {
 
 async function fetchOne(item) {
   try {
+    if (!item || !(await isSafeUrl(item.url))) {
+      return null;
+    }
     const controller = new AbortController();
     const fetchPromise = fetch(item.url, {
       headers: {

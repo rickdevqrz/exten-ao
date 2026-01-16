@@ -32,6 +32,8 @@ const reasonsListEl = document.getElementById("reasons-list");
 const emptyReasonsEl = document.getElementById("empty-reasons");
 const analyzeBtn = document.getElementById("analyze");
 const copyBtn = document.getElementById("copy-report");
+const shareToggleBtn = document.getElementById("share-toggle");
+const sharePanelEl = document.getElementById("share-panel");
 const toggleEnabledBtn = document.getElementById("toggle-enabled");
 const reloadBtn = document.getElementById("reload");
 const settingsBtn = document.getElementById("open-settings");
@@ -46,6 +48,7 @@ let currentTabId = null;
 let currentDomain = "";
 let currentUrl = "";
 let lastResult = null;
+let sharePayload = { title: "", url: "" };
 
 const MAX_VISIBLE_SOURCES = 3;
 const MAX_MODAL_SOURCES = 2;
@@ -57,8 +60,9 @@ const SETTINGS_DEFAULTS = {
   theme: "tech",
   autoRefreshEnabled: true,
   autoRefreshIntervalMinutes: 5,
-  useApi: true,
-  apiUrl: "https://veredicto.up.railway.app/api/analisar"
+  useApi: false,
+  apiUrl: "https://veredicto.up.railway.app/api/analisar",
+  apiToken: ""
 };
 
 function setStatus(message) {
@@ -75,6 +79,15 @@ function normalizeDomain(url) {
     return parsed.hostname.replace(/^www\./i, "");
   } catch (err) {
     return "";
+  }
+}
+
+function isHttpUrl(value) {
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch (err) {
+    return false;
   }
 }
 
@@ -104,6 +117,13 @@ function applyControlState(settings) {
   }
   if (topicInput) {
     topicInput.disabled = !enabled || !canSearch;
+  }
+  if (shareToggleBtn) {
+    const shareEnabled = shareToggleBtn.dataset.state === "on";
+    shareToggleBtn.disabled = blocked || !shareEnabled;
+    if (blocked) {
+      closeSharePanel();
+    }
   }
 }
 
@@ -422,6 +442,7 @@ function renderResult(result) {
     setVerdictText(verdictText, reasonText, { prefix: false });
     confidenceEl.textContent = "-";
     levelReportEl.textContent = "Noticias recentes.";
+    updateShareState(result, null);
   } else {
     if (emptySourcesEl) {
       emptySourcesEl.textContent = "Sem fontes.";
@@ -461,6 +482,7 @@ function renderResult(result) {
     }
 
     levelReportEl.textContent = levelReportText;
+    updateShareState(result, levelMeta);
   }
 
   reasonsListEl.innerHTML = "";
@@ -482,11 +504,93 @@ function renderResult(result) {
   updateEngineStatus(result);
 }
 
+function closeSharePanel() {
+  if (!sharePanelEl) return;
+  sharePanelEl.classList.remove("open");
+  sharePanelEl.setAttribute("aria-hidden", "true");
+}
+
+function toggleSharePanel() {
+  if (!sharePanelEl) return;
+  const isOpen = sharePanelEl.classList.toggle("open");
+  sharePanelEl.setAttribute("aria-hidden", isOpen ? "false" : "true");
+}
+
+function buildShareText(title, url) {
+  const cleanTitle = String(title || "").trim();
+  if (!cleanTitle) return url;
+  return `${cleanTitle} - ${url}`;
+}
+
+function updateShareState(result, levelMeta) {
+  if (!shareToggleBtn || !sharePanelEl) return;
+  const isQuery = result && result.context === "query";
+  const url = (result && result.url) || currentUrl || "";
+  const title = (result && result.title) || "";
+  const levelOk = levelMeta ? levelMeta.level <= 3 : false;
+  const allowed = Boolean(result && !isQuery && levelOk && isHttpUrl(url));
+
+  sharePayload = { title, url };
+  shareToggleBtn.disabled = !allowed;
+  shareToggleBtn.dataset.state = allowed ? "on" : "off";
+  if (!allowed) {
+    closeSharePanel();
+  }
+}
+
+async function handleShare(target) {
+  if (!shareToggleBtn || shareToggleBtn.disabled) {
+    setStatus("Compartilhamento indisponivel.");
+    return;
+  }
+
+  const url = sharePayload.url || "";
+  if (!isHttpUrl(url)) {
+    setStatus("URL invalida para compartilhar.");
+    return;
+  }
+
+  const title = sharePayload.title || "Noticia";
+  const shareText = buildShareText(title, url);
+  const encodedUrl = encodeURIComponent(url);
+  const encodedTitle = encodeURIComponent(title);
+  const encodedText = encodeURIComponent(shareText);
+  let shareUrl = "";
+
+  if (target === "whatsapp") {
+    shareUrl = `https://api.whatsapp.com/send?text=${encodedText}`;
+  } else if (target === "telegram") {
+    shareUrl = `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`;
+  } else if (target === "twitter") {
+    shareUrl = `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`;
+  } else if (target === "instagram") {
+    try {
+      await navigator.clipboard.writeText(shareText);
+      setStatus("Link copiado para o Instagram.");
+    } catch (err) {
+      setStatus("Nao foi possivel copiar o link.");
+    }
+    window.open("https://www.instagram.com/", "_blank", "noopener");
+    closeSharePanel();
+    return;
+  }
+
+  if (shareUrl) {
+    window.open(shareUrl, "_blank", "noopener");
+    closeSharePanel();
+  }
+}
+
 function buildSourceItem(source) {
   const li = document.createElement("li");
   const link = document.createElement("a");
-  link.href = source.url || "#";
+  const safeUrl = source && isHttpUrl(source.url) ? source.url : "";
+  link.href = safeUrl || "#";
   link.className = "source-link";
+  if (!safeUrl) {
+    link.classList.add("disabled");
+    link.setAttribute("aria-disabled", "true");
+  }
   const title = source.title || source.domain || source.url || "fonte";
   const metaParts = [];
   if (source.domain) metaParts.push(source.domain);
@@ -771,7 +875,8 @@ async function analyzeTopic() {
     const apiResponse = await chrome.runtime.sendMessage({
       type: "API_ANALYZE",
       payload: { query },
-      apiUrl: settings.apiUrl
+      apiUrl: settings.apiUrl,
+      apiToken: settings.apiToken
     });
 
     if (!apiResponse || !apiResponse.ok || !apiResponse.result) {
@@ -850,6 +955,22 @@ async function copyReport() {
 
 analyzeBtn.addEventListener("click", analyzePage);
 copyBtn.addEventListener("click", copyReport);
+if (shareToggleBtn) {
+  shareToggleBtn.addEventListener("click", () => {
+    if (shareToggleBtn.disabled) {
+      setStatus("Compartilhamento indisponivel.");
+      return;
+    }
+    toggleSharePanel();
+  });
+}
+if (sharePanelEl) {
+  sharePanelEl.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-share]");
+    if (!target) return;
+    handleShare(target.dataset.share);
+  });
+}
 if (topicSearchBtn) {
   topicSearchBtn.addEventListener("click", analyzeTopic);
 }

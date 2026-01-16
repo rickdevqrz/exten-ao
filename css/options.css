@@ -89,6 +89,7 @@ label {
 
 select,
 input[type="url"],
+input[type="password"],
 input[type="number"] {
   width: 100%;
   padding: 10px 12px;

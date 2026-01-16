@@ -29,6 +29,37 @@ app.use(
 );
 
 app.use((req, res, next) => {
+  if (req.path === "/api/analisar" && config.apiToken) {
+    const token = req.get("x-api-token");
+    if (token !== config.apiToken) {
+      return res.status(401).json({
+        mode: "search_only",
+        verdict: "nao verificavel",
+        confidence: 0.4,
+        score: 45,
+        reasons: ["Token invalido."],
+        claims: [],
+        sources: [],
+        highlights: [],
+        debug: { search_used: false, fetched_sources: 0 }
+      });
+    }
+  }
+  if (req.path === "/api/analisar" && config.fetchUrlEnabled === false) {
+    if (req.body && (req.body.fetch_url || req.body.fetchUrl)) {
+      return res.json({
+        mode: "search_only",
+        verdict: "nao verificavel",
+        confidence: 0.4,
+        score: 45,
+        reasons: ["Busca de URL desativada no servidor."],
+        claims: [],
+        sources: [],
+        highlights: [],
+        debug: { search_used: false, fetched_sources: 0 }
+      });
+    }
+  }
   const { title = "", text = "", url = "" } = req.body || {};
   if (req.path === "/api/analisar") {
     console.info("[analisar]", {

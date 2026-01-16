@@ -363,6 +363,7 @@ body[data-view="query"] .score,
 body[data-view="query"] .verdict,
 body[data-view="query"] .reasons,
 body[data-view="query"] .actions,
+body[data-view="query"] .share-panel,
 body[data-view="query"] .system-status {
   display: none;
 }
@@ -892,6 +893,12 @@ body[data-view="query"] .system-status {
   letter-spacing: 0.02em;
 }
 
+.source-link.disabled {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+}
+
 body[data-view="query"] .source-link {
   cursor: pointer;
 }
@@ -912,6 +919,31 @@ body[data-view="query"] .source-link:hover {
   position: relative;
   z-index: 1;
   animation: floatIn 0.35s ease 0.1s both;
+}
+
+.share-panel {
+  margin-top: 8px;
+  display: none;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.share-panel.open {
+  display: grid;
+}
+
+.share-btn {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.share-btn:hover {
+  box-shadow: 0 8px 16px rgba(15, 23, 38, 0.18);
 }
 
 button {

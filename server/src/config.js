@@ -16,12 +16,16 @@ export const config = {
   openaiApiKey: process.env.OPENAI_API_KEY || "",
   openaiBaseUrl: process.env.OPENAI_BASE_URL || "",
   openaiModel: process.env.OPENAI_MODEL || "gpt-4o-mini",
+  apiToken: process.env.API_TOKEN || "",
   aiEnabled,
   aiProvider,
   ollamaHost: process.env.OLLAMA_HOST || "http://localhost:11434",
   ollamaModel: process.env.OLLAMA_MODEL || "llama3.1:8b",
   searchEnabled: process.env.SEARCH_ENABLED
     ? process.env.SEARCH_ENABLED === "true"
+    : true,
+  fetchUrlEnabled: process.env.FETCH_URL_ENABLED
+    ? process.env.FETCH_URL_ENABLED === "true"
     : true,
   allowlist: [
     "agenciabrasil.ebc.com.br",
