@@ -71,6 +71,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(config.port, () => {
-  console.log(`Servidor rodando em http://localhost:${config.port}`);
+// Aqui eu faço bind em 0.0.0.0 para o Railway aceitar trafego externo.
+app.listen(config.port, "0.0.0.0", () => {
+  console.log(`Servidor rodando em http://0.0.0.0:${config.port}`);
 });
