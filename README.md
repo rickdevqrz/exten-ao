@@ -25,45 +25,28 @@ Eu criei esta extensao para estudar como noticias falsas se espalham e como pequ
 ## Etica e responsabilidade
 Eu nao coleto dados pessoais, nao rastreio usuarios e nao censuro conteudo. Eu deixei o sistema transparente de proposito para que o usuario entenda o motivo do resultado e tome sua propria decisao.
 
-## Tutorial completo (extensao + servidor)
-### 1) Baixar o codigo
-- Eu baixo o ZIP do projeto ou clono o repositorio.
-- Eu uso:
-```bash
-git clone https://github.com/rickdevqrz/exten-ao.git
-cd exten-ao
-```
+## Tutorial rapido (extensao pronta)
+### 1) Baixar a extensao
+- Eu baixo a ultima release em:
+  `https://github.com/rickdevqrz/exten-ao/releases/latest`
+- Eu escolho o arquivo `extensao-release.rar` (ou `.zip`).
+- Eu extraio os arquivos em uma pasta.
 
-### 2) Preparar o servidor local (opcional, mas recomendado)
-- Eu instalo o Node.js 18+.
-- Eu entro na pasta `server`.
-- Eu copio `server/.env.example` para `server/.env`.
-- Eu preencho `SERPER_API_KEY` se eu quiser resultados melhores; sem isso eu ainda tenho RSS.
-- Eu mantenho `AI_ENABLED=false` e `OPENAI_API_KEY` vazio se eu nao quiser usar IA.
-- Eu rodo:
-```bash
-cd server
-npm install
-npm run dev
-```
-- Eu testo `http://localhost:8787/health` e espero `{ "ok": true }`.
-
-### 3) Instalar a extensao no Chrome
+### 2) Instalar no Chrome
 - Eu abro `chrome://extensions`.
 - Eu ativo o **Modo do desenvolvedor**.
 - Eu clico em **Carregar sem compactacao**.
-- Eu seleciono a pasta deste projeto.
+- Eu seleciono a pasta extraida.
 
-### 4) Conectar a extensao ao servidor
-- Eu abro as **Opcoes** da extensao.
-- Eu ativo **Usar verificacao com fontes (Serper/RSS)**.
-- Eu preencho a URL `http://localhost:8787/api/analisar`.
-- Eu salvo as configuracoes.
-
-### 5) Testar tudo
+### 3) Testar
 - Eu abro uma noticia em um site comum.
 - Eu clico no icone da extensao.
 - Eu uso **Analisar** e verifico o veredito, o motivo e as fontes.
+
+### Observacao
+- Eu deixei a extensao configurada para usar o servidor publico em
+  `https://veredicto.up.railway.app/api/analisar`.
+- Eu nao preciso configurar servidor local para usar o basico.
 
 ## Como eu testo
 1. Eu abro uma noticia em um site comum.
@@ -75,12 +58,12 @@ npm run dev
 Eu deixei uma pagina de configuracoes com ajustes basicos:
 - Eu controlo a sensibilidade (baixa, media, alta).
 - Eu ativo a verificacao com fontes (Serper/RSS) quando quero checar noticias na web.
-- Eu aponto a URL da API quando uso o servidor local.
+- Eu aponto outra URL da API quando quero usar meu proprio servidor.
 - Eu mudo o tema da interface quando preciso.
 - Eu ligo a atualizacao automatica quando quero recarregar analises recentes.
 
-## Servidor opcional (verificacao com fontes)
-Eu mantenho um servidor Node.js local para buscar fontes confiaveis. Quando ele esta ativo, eu envio `title`, `text` e `url`, e recebo o score com as fontes.
+## Servidor local (opcional)
+Eu so preciso disso se eu quiser controle total. Quando ele esta ativo, eu envio `title`, `text` e `url`, e recebo o score com as fontes.
 
 Quando eu envio dados para o servidor, eu uso este formato:
 ```json

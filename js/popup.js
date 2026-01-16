@@ -58,7 +58,7 @@ const SETTINGS_DEFAULTS = {
   autoRefreshEnabled: true,
   autoRefreshIntervalMinutes: 5,
   useApi: true,
-  apiUrl: "http://localhost:8787/api/analisar"
+  apiUrl: "https://veredicto.up.railway.app/api/analisar"
 };
 
 function setStatus(message) {
