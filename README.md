@@ -31,6 +31,12 @@ Este e um projeto pessoal e educacional. A ideia e estudar desinformacao e enten
 - Pegue a ultima release em:  
   `https://github.com/rickdevqrz/exten-ao/releases/latest`  
 - Baixe o `.zip` e extraia em uma pasta.
+  
+Opcao alternativa (clonar o repositorio):
+```bash
+git clone https://github.com/rickdevqrz/exten-ao.git
+cd exten-ao
+```
 
 2) Carregar no Chrome  
 - Abra `chrome://extensions`.  
@@ -44,10 +50,9 @@ Este e um projeto pessoal e educacional. A ideia e estudar desinformacao e enten
 - Use a URL padrao ou informe seu servidor.
 
 ## Servidor local (opcional)
-Use este modo se quiser controlar as fontes e usar sua propria chave.
+Este modo permite rodar o servidor no seu PC e configurar credenciais de API.
 
-Requisitos:
-- Node.js 18+
+Requisitos: Node.js 18+.
 
 Passo a passo:
 1) Copie `server/.env.example` para `server/.env`.
