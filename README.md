@@ -43,6 +43,31 @@ Este e um projeto pessoal e educacional. A ideia e estudar desinformacao e enten
 - Ative **Verificacao com fontes (Serper/RSS)**.  
 - Use a URL padrao ou informe seu servidor.
 
+## Servidor local (opcional)
+Use este modo se quiser controlar as fontes e usar sua propria chave.
+
+Requisitos:
+- Node.js 18+
+
+Passo a passo:
+1) Copie `server/.env.example` para `server/.env`.
+2) Configure no `.env` (opcional):
+   - `SERPER_API_KEY` (melhora resultados).
+   - `API_TOKEN` (protege o endpoint).
+   - `FETCH_URL_ENABLED=true` ou `false` (ativa/desativa fetch de URL).
+3) Rode o servidor:
+```bash
+cd server
+npm install
+npm run dev
+```
+4) Teste: `http://localhost:8787/health`
+
+5) Aponte a extensao para o servidor:
+- Em **Opcoes**, ative **Verificacao com fontes (Serper/RSS)**.
+- URL: `http://localhost:8787/api/analisar`
+- Se definiu `API_TOKEN`, preencha o Token da API.
+
 ## Uso basico
 1) Abra uma noticia.
 2) Clique no icone da extensao.
