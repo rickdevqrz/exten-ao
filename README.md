@@ -55,26 +55,19 @@ cd exten-ao
 2) Instalar a extensao no Chrome (mesmos passos da Opcao A).
 3) Configurar e rodar o servidor local (veja a secao abaixo).
 
-Servidor local (opcional)
-
-Este modo permite rodar o servidor no seu próprio computador e configurar credenciais de API.
+## Servidor local (opcional)
+Este modo permite rodar o servidor no seu PC e configurar credenciais de API.
 
 Requisitos: Node.js 18+.
 
 Passo a passo:
-
-Copie server/.env.example para server/.env.
-
-Configure no .env (opcional):
-
-SERPER_API_KEY (melhora os resultados).
-
-API_TOKEN (protege o endpoint).
-
-FETCH_URL_ENABLED=true ou false (ativa ou desativa o fetch de URL).
-
-Rode o servidor:
-
+1) Copie `server/.env.example` para `server/.env`.
+2) Configure no `.env` (opcional):
+   - `SERPER_API_KEY` (melhora resultados).
+   - `API_TOKEN` (protege o endpoint).
+   - `FETCH_URL_ENABLED=true` ou `false` (ativa/desativa fetch de URL).
+3) Rode o servidor:
+```bash
 cd server
 npm install
 npm run dev
