@@ -1,107 +1,161 @@
-# Detector de Fake News (BR) - Extensao para analise de noticias
+Detector de Fake News (BR) – Extensão para Análise de Notícias
 
-Extensao do Chrome para analise de noticias em portugues. Ela calcula um indice de suspeita com heuristicas locais e, se ativado, consulta fontes confiaveis via um servidor para apoiar o veredito.
+Extensão do Chrome para análise de notícias em português. Ela calcula um índice de suspeita com heurísticas locais e, se ativado, consulta fontes confiáveis por meio de um servidor para apoiar o veredito.
 
-## Motivacao
-Este e um projeto pessoal e educacional. A ideia e estudar desinformacao e entender quais sinais objetivos aparecem em textos suspeitos, sem prometer uma resposta definitiva.
+Motivação
 
-## Principais funcionalidades
-- Analise local do texto da pagina e indice de suspeita.
-- Veredito curto, motivo principal e resumo do nivel.
-- Consulta de fontes via servidor (Serper/RSS) quando ativado.
-- Pesquisa de assuntos e listagem de noticias recentes.
-- Compartilhamento habilitado apenas para niveis 1 a 3 (WhatsApp, Telegram, Twitter e Instagram).
-- Tema da interface e atualizacao automatica configuravel.
+Este é um projeto pessoal e educacional. A ideia é estudar a desinformação e entender quais sinais objetivos aparecem em textos suspeitos, sem prometer uma resposta definitiva.
 
-## Limitacoes importantes
-- O resultado nao e verdade absoluta e pode errar.
-- Noticias muito recentes podem ter poucas fontes.
-- Conteudo satirico/opinativo pode gerar falsos positivos.
-- Paginas com pouco texto ou paywall podem falhar.
-- As fontes sao restritas a uma allowlist de veiculos.
+Principais funcionalidades
 
-## Privacidade e uso de dados
-- A analise local acontece no navegador.
-- Se a verificacao com fontes estiver ativada, a extensao envia titulo, texto, URL e sensibilidade para o servidor.
-- O servidor nao armazena conteudo; apenas processa a requisicao e retorna o resultado.
-- Nao ha rastreamento de usuarios.
+Análise local do texto da página e cálculo de índice de suspeita.
 
-## Instalacao (Chrome - modo desenvolvedor)
+Veredito curto, motivo principal e resumo do nível.
 
-### Opcao A: instalar apenas a extensao (mais simples)
-1) Baixar a extensao  
-- Pegue a ultima release em:  
-  `https://github.com/rickdevqrz/exten-ao/releases/latest`  
-- Baixe o `.zip` e extraia em uma pasta.
+Consulta de fontes via servidor (Serper/RSS), quando ativada.
 
-2) Carregar no Chrome  
-- Abra `chrome://extensions`.  
-- Ative **Modo do desenvolvedor**.  
-- Clique em **Carregar sem compactacao**.  
-- Selecione a pasta extraida.
+Pesquisa de assuntos e listagem de notícias recentes.
 
-3) (Opcional) Ativar verificacao com fontes  
-- Abra **Opcoes** da extensao.  
-- Ative **Verificacao com fontes (Serper/RSS)**.  
-- A release ja vem configurada com:  
-  `https://veredicto.up.railway.app/api/analisar`
+Compartilhamento habilitado apenas para níveis 1 a 3 (WhatsApp, Telegram, Twitter e Instagram).
 
-### Opcao B: clonar o repositorio (para servidor local e ajustes)
-1) Clonar o projeto:
-```bash
+Tema da interface e atualização automatizada configuráveis.
+
+Limitações importantes
+
+O resultado não é uma verdade absoluta e pode errar.
+
+Notícias muito recentes podem ter poucas fontes disponíveis.
+
+Conteúdo satírico ou opinativo pode gerar falsos positivos.
+
+Páginas com pouco texto ou com paywall podem falhar.
+
+As fontes são restritas a uma allowlist de veículos.
+
+Privacidade e uso de dados
+
+A análise local acontece inteiramente no navegador.
+
+Se a verificação com fontes estiver ativada, a extensão envia título, texto, URL e sensibilidade para o servidor.
+
+O servidor não armazena conteúdo; apenas processa a requisição e retorna o resultado.
+
+Não há rastreamento de usuários.
+
+Instalação (Chrome – modo desenvolvedor)
+Opção A: instalar apenas a extensão (mais simples)
+
+Baixar a extensão
+
+Pegue a última release em:
+https://github.com/rickdevqrz/exten-ao/releases/latest
+
+Baixe o arquivo .zip e extraia-o em uma pasta.
+
+Carregar no Chrome
+
+Abra chrome://extensions.
+
+Ative o Modo do desenvolvedor.
+
+Clique em Carregar sem compactação.
+
+Selecione a pasta extraída.
+
+(Opcional) Ativar verificação com fontes
+
+Abra Opções da extensão.
+
+Ative Verificação com fontes (Serper/RSS).
+
+A release já vem configurada com:
+https://veredicto.up.railway.app/api/analisar
+
+Opção B: clonar o repositório (para servidor local e ajustes)
+
+Clonar o projeto:
+
 git clone https://github.com/rickdevqrz/exten-ao.git
 cd exten-ao
-```
-2) Instalar a extensao no Chrome (mesmos passos da Opcao A).
-3) Configurar e rodar o servidor local (veja a secao abaixo).
 
-## Servidor local (opcional)
-Este modo permite rodar o servidor no seu PC e configurar credenciais de API.
+
+Instalar a extensão no Chrome (mesmos passos da Opção A).
+
+Configurar e rodar o servidor local (veja a seção abaixo).
+
+Servidor local (opcional)
+
+Este modo permite rodar o servidor no seu próprio computador e configurar credenciais de API.
 
 Requisitos: Node.js 18+.
 
 Passo a passo:
-1) Copie `server/.env.example` para `server/.env`.
-2) Configure no `.env` (opcional):
-   - `SERPER_API_KEY` (melhora resultados).
-   - `API_TOKEN` (protege o endpoint).
-   - `FETCH_URL_ENABLED=true` ou `false` (ativa/desativa fetch de URL).
-3) Rode o servidor:
-```bash
+
+Copie server/.env.example para server/.env.
+
+Configure no .env (opcional):
+
+SERPER_API_KEY (melhora os resultados).
+
+API_TOKEN (protege o endpoint).
+
+FETCH_URL_ENABLED=true ou false (ativa ou desativa o fetch de URL).
+
+Rode o servidor:
+
 cd server
 npm install
 npm run dev
-```
-4) Teste: `http://localhost:8787/health`
 
-5) Aponte a extensao para o servidor:
-- Em **Opcoes**, ative **Verificacao com fontes (Serper/RSS)**.
-- URL: `http://localhost:8787/api/analisar`
-- Se definiu `API_TOKEN`, preencha o Token da API.
 
-## Uso basico
-1) Abra uma noticia.
-2) Clique no icone da extensao.
-3) Clique em **Analisar**.
-4) Leia veredito, motivos e fontes.
-5) Compartilhe apenas se o nivel for 1, 2 ou 3.
+Teste: http://localhost:8787/health
 
-## Estrutura do projeto (breve)
-- `manifest.json` - configuracao da extensao.
-- `popup.html`, `css/popup.css`, `js/popup.js` - interface principal.
-- `js/content.js` - leitura do texto da pagina.
-- `js/background.js` - comunicacao com a API.
-- `options.html`, `css/options.css`, `js/options.js` - pagina de configuracoes.
-- `server/` - servidor opcional para busca de fontes.
+Aponte a extensão para o servidor:
 
-## Aviso legal
-Este projeto nao substitui checagem jornalistica. Ele apenas auxilia o usuario a refletir antes de compartilhar.
+Em Opções, ative Verificação com fontes (Serper/RSS).
 
-## Prints (opcional)
-Sugestao: adicione capturas da tela do popup e da tela de opcoes para facilitar o entendimento.
+URL: http://localhost:8787/api/analisar
 
-## Nota do autor
-Tive ajuda de IA como assistente em partes do desenvolvimento e tambem fiz alteracoes manuais no codigo.
+Se tiver definido API_TOKEN, preencha o campo Token da API.
 
-## Licenca
-Sem licenca definida no momento.
+Uso básico
+
+Abra uma notícia.
+
+Clique no ícone da extensão.
+
+Clique em Analisar.
+
+Leia o veredito, os motivos e as fontes.
+
+Compartilhe apenas se o nível for 1, 2 ou 3.
+
+Estrutura do projeto (breve)
+
+manifest.json – configuração da extensão.
+
+popup.html, css/popup.css, js/popup.js – interface principal.
+
+js/content.js – leitura do texto da página.
+
+js/background.js – comunicação com a API.
+
+options.html, css/options.css, js/options.js – página de configurações.
+
+server/ – servidor opcional para busca de fontes.
+
+Aviso legal
+
+Este projeto não substitui a checagem jornalística profissional. Ele apenas auxilia o usuário a refletir antes de compartilhar.
+
+Prints (opcional)
+
+Sugestão: adicione capturas de tela do popup e da página de opções para facilitar o entendimento.
+
+Nota do autor
+
+Tive ajuda de IA como assistente em partes do desenvolvimento e também fiz alterações manuais no código.
+
+Licença
+
+Sem licença definida no momento.
